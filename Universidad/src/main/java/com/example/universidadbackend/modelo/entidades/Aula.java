@@ -1,8 +1,6 @@
-package com.example.universidad.modelo.entidades;
-
-import com.example.universidad.modelo.entidades.enumeradores.TipoPizarra;
+package com.example.universidadbackend.modelo.entidades;
+import com.example.universidadbackend.modelo.entidades.enumeradores.TipoPizarra;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -11,12 +9,14 @@ import java.util.Objects;
 public class Aula implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    // sirve para que el id se autoincremente en la base de datos
     private Integer id;
     @Column(name = "numero_aula", nullable = false)
     private Integer numAula;
     @Column(name = "medidas_aula")
     private String medidas;
-    @Column(name = "caantidad_carpetas")
+    @Column(name = "cantidad_carpetas")
     private Integer cantidadCarpetas;
     @Column(name = "tipo_pizarra")
     @Enumerated(EnumType.STRING)
@@ -25,10 +25,17 @@ public class Aula implements Serializable {
     private LocalDateTime fechaAlta;
     @Column(name = "fecha_modificacion")
     private LocalDateTime fechaModificacion;
+    @ManyToOne(
+            optional = true,
+            cascade ={
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+            }
+    )
     @JoinColumn(
-            name ="pabellon_id",
+            name = "pabellon_id",
             foreignKey = @ForeignKey(
-                    name = "FK_PAPELLON_ID"
+                    name = "FK_PABELLON_ID"
             )
     )
     private Pabellon pabellon;
@@ -107,7 +114,17 @@ public class Aula implements Serializable {
     public void setPabellon(Pabellon pabellon) {
         this.pabellon = pabellon;
     }
-
+    @PrePersist
+    private void antesDePersistir(){
+        this.fechaAlta = LocalDateTime.now();
+    }
+    //.now() es un metodo estatico que devuelve la fecha y hora actual
+    // de la maquina en la que se ejecuta el programa
+    //Los decoradores @PrePersist y @PreUpdate se ejecutan antes de que se persista o actualice
+    @PreUpdate
+    private void antesDeActualizar(){
+        this.fechaModificacion = LocalDateTime.now();
+    }
     @Override
     public String toString() {
         return "Aula{" +

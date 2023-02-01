@@ -1,19 +1,36 @@
-package com.example.universidad.modelo.entidades;
+package com.example.universidadbackend.modelo.entidades;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
+@Entity
+@Table(name = "personas")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Persona implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //abstract:Para que no se pueda instanciar objetos de esta clase Persona
     private Integer id;
+    @Column(nullable = false, length = 60)
     private String nombre;
+    @Column(nullable = false, length = 60)
     private String apellido;
+    @Column(nullable = false, length = 8)
     private String dni;
+    @Column(name = "correo_electronico", nullable = false, length = 80)
     private String correoElectronico;
+    @Column(name = "telefono", length = 9)
     private String telefono;
+    @Column(name = "fecha_alta")
     private LocalDateTime fechaAlta;
+    @Column(name = "fecha_modificacion")
     private LocalDateTime fechaModificacion;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "codigoPostal", column = @Column(name = "codigo_postal")),
+            @AttributeOverride(name = "dpt", column = @Column(name = "departamento"))
+    })
     private Direccion direccion;
     public Persona() {
     }
@@ -98,7 +115,14 @@ public abstract class Persona implements Serializable {
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
-
+    @PrePersist
+    private void antesDePersistir(){
+        this.fechaAlta = LocalDateTime.now();
+    }
+    @PreUpdate
+    private void antesDeActualizar(){
+        this.fechaModificacion = LocalDateTime.now();
+    }
     @Override
     public String toString() {
         return "Persona{" +

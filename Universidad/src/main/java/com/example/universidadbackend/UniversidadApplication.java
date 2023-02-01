@@ -1,4 +1,4 @@
-package com.example.universidad;
+package com.example.universidadbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class UniversidadApplication {
 
-	public static void main(String[] args) {
-		System.out.println("Hola Mundo");
-	}
+    public static void main(String[] args) {
+
+        SpringApplication.run(UniversidadApplication.class, args);
+    }
 
 }
+

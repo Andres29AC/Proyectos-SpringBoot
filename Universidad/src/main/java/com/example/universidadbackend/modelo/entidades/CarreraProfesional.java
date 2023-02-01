@@ -1,17 +1,37 @@
-package com.example.universidad.modelo.entidades;
+package com.example.universidadbackend.modelo.entidades;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
+@Table(name = "carreras")
 public class CarreraProfesional implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false, unique = true, length = 80)
     private String nombre;
+    @Column(name = "cantidad_cursos")
     private Integer cantidadCursos;
+    @Column(name = "cantidad_anios")
     private Integer cantidadAnios;
+    @Column(name = "fecha_alta")
     private LocalDateTime fechaAlta;
+    @Column(name = "fecha_modificacion")
     private LocalDateTime fechaModificacion;
-
+    @OneToMany(
+            mappedBy = "carreraProfesional",
+            fetch = FetchType.LAZY
+    )
+    private Set<Alumno> alumnos;
+    @ManyToMany(
+            mappedBy = "carrerasProfesionales",
+            fetch = FetchType.LAZY
+    )
+    private Set<Profesor> profesores;
     public CarreraProfesional() {
     }
 
@@ -70,6 +90,30 @@ public class CarreraProfesional implements Serializable {
         this.fechaModificacion = fechaModificacion;
     }
 
+    public Set<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(Set<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
+
+    public Set<Profesor> getProfesores() {
+        return profesores;
+    }
+
+    public void setProfesores(Set<Profesor> profesores) {
+        this.profesores = profesores;
+    }
+
+    @PrePersist
+    private void antesDePersistir(){
+        this.fechaAlta = LocalDateTime.now();
+    }
+    @PreUpdate
+    private void antesDeActualizar(){
+        this.fechaModificacion = LocalDateTime.now();
+    }
     @Override
     public String toString() {
         return "CarreraProfesional{" +

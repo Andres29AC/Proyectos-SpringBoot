@@ -1,12 +1,14 @@
-package com.example.universidad.modelo.entidades;
+package com.example.universidadbackend.modelo.entidades;
+
+import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
-
+@Embeddable
 public class Direccion implements Serializable {
     private String calle;
     private String numero;
     private String codigoPostal;
-    private String departamento;
+    private String dpt;
     private String piso;
     private String localidad;
 
@@ -17,7 +19,7 @@ public class Direccion implements Serializable {
         this.calle = calle;
         this.numero = numero;
         this.codigoPostal = codigoPostal;
-        this.departamento = departamento;
+        this.dpt = dpt;
         this.piso = piso;
         this.localidad = localidad;
     }
@@ -47,11 +49,11 @@ public class Direccion implements Serializable {
     }
 
     public String getDepartamento() {
-        return departamento;
+        return dpt;
     }
 
     public void setDepartamento(String departamento) {
-        this.departamento = departamento;
+        this.dpt = departamento;
     }
 
     public String getPiso() {
@@ -76,7 +78,7 @@ public class Direccion implements Serializable {
                 "calle='" + calle + '\'' +
                 ", numero='" + numero + '\'' +
                 ", codigoPostal='" + codigoPostal + '\'' +
-                ", departamento='" + departamento + '\'' +
+                ", departamento='" + dpt + '\'' +
                 ", piso='" + piso + '\'' +
                 ", localidad='" + localidad + '\'' +
                 '}';
