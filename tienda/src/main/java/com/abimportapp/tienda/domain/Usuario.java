@@ -1,0 +1,22 @@
+package com.abimportapp.tienda.domain;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Usuario {
+    private Integer id;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String address;
+    private String cellphone;
+    private String password;
+    private UserType userType;
+    private LocalDateTime dateCreated;
+}
