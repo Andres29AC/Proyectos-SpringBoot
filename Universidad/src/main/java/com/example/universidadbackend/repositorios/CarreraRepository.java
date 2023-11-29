@@ -6,7 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 
 //Usando Spring Data JPA
 public interface CarreraRepository extends CrudRepository<CarreraProfesional, Integer>{
-
+    Iterable<CarreraProfesional> findCarrerasByNombreContains(String nombre);
+    Iterable<CarreraProfesional> findCarrerasByNombreContainsIgnoreCase(String nombre);
+    Iterable<CarreraProfesional> findCarrerasByCantidadAniosAfter(Integer cantidadAnios);
 }
 
 //TODO:Este repositorio debe extender de uno de los tres

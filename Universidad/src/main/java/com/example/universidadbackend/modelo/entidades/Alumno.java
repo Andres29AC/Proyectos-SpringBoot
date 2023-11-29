@@ -1,5 +1,6 @@
 package com.example.universidadbackend.modelo.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class Alumno extends Persona{
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "carrera_id")
+    @JsonIgnoreProperties(value = {"hibernateLazyInitializer","alumnos"})
     private CarreraProfesional carreraProfesional;
     public Alumno() {
     }
