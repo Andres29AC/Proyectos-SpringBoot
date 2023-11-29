@@ -23,21 +23,21 @@ public class UniversidadApplication {
           //  System.out.println(beanDefinitionName);
         //}
     }
-    @Bean
-    public CommandLineRunner runner(){
-        return args -> {
-            //Direccion direccion = new Direccion("Huanchaco","45","012","80","2","Balneario");
-            //Persona alumno = new Alumno(null, "Alejandra", "Sosa", "3432224","ale65@hotmail.com","6534521",direccion);
-            //Persona guardar=servicio.save(alumno);
-            //System.out.println(guardar.toString());
-            List<Persona> alumnos = (List<Persona>) servicio.findAll();
-            //for (Persona alumno : alumnos) {
-             //   System.out.println(alumno.toString());
-           // }
-            //Esto nos permite traer todos los alumnos
-            alumnos.forEach(System.out::println);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner runner(){
+//        return args -> {
+//            //Direccion direccion = new Direccion("Huanchaco","45","012","80","2","Balneario");
+//            //Persona alumno = new Alumno(null, "Alejandra", "Sosa", "3432224","ale65@hotmail.com","6534521",direccion);
+//            //Persona guardar=servicio.save(alumno);
+//            //System.out.println(guardar.toString());
+//            List<Persona> alumnos = (List<Persona>) servicio.findAll();
+//            //for (Persona alumno : alumnos) {
+//             //   System.out.println(alumno.toString());
+//           // }
+//            //Esto nos permite traer todos los alumnos
+//            alumnos.forEach(System.out::println);
+//        };
+//    }
 }
 
 

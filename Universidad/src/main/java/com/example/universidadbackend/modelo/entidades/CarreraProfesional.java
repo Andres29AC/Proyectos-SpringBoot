@@ -1,4 +1,5 @@
 package com.example.universidadbackend.modelo.entidades;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -26,11 +27,13 @@ public class CarreraProfesional implements Serializable {
             mappedBy = "carreraProfesional",
             fetch = FetchType.LAZY
     )
+    @JsonIgnoreProperties({"carreraProfesional"})
     private Set<Alumno> alumnos;
     @ManyToMany(
             mappedBy = "carrerasProfesionales",
             fetch = FetchType.LAZY
     )
+    @JsonIgnoreProperties({"carrerasProfesionales"})
     private Set<Profesor> profesores;
     public CarreraProfesional() {
     }
