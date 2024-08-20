@@ -20,26 +20,7 @@
 </head>
 
 <body>
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">AB & Import Solutions</a>
-
-
-
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link"
-            href="login.html">Login</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <div th:insert = "~{user/template_user.html::header}"></div>
 
     <!-- Page Content -->
     <div class="container">
@@ -49,17 +30,25 @@
         <h1 class="display-4">Bienvenido a AB & Import Solutions</h1>
         <img src="/img/logo2.jpg" alt="Logo de mi empresa" width="300" height="350" style="display: block; margin: 0 auto;">
       </header>
+        <div class="row text-center">
+
+            <div class="col-lg-3 col-md-6 mb-4" th:each="product:${products}" >
+                <div class="card h-100">
+                    <img class="card-img-top" th:src="@{/images/{img} (img =${product.image})}" alt="">
+                    <div class="card-body">
+                        <p class="card-text" th:text="${product.name}">Nombre del producto.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="@{/home/product-detail/{id} (id=${product.id})}" class="btn btn-success">Ver producto</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <!-- /.container -->
 
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; AB & Import Solutions 2023</p>
-      </div>
-      <!-- /.container -->
-    </footer>
+    <div th:insert = "~{user/template_user.html::footer}"></div>
 
     <!-- Bootstrap core JavaScript -->
     <script th:src="@{vendor/jquery/jquery.min.js}"></script>
