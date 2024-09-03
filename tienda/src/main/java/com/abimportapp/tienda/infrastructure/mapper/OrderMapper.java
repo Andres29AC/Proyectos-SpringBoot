@@ -12,7 +12,7 @@ public interface OrderMapper {
     @Mappings(
             {
                     @Mapping(source = "id", target = "id"),
-                    @Mapping(source = "dataCreated", target = "dataCreated"),
+                    @Mapping(source = "dateCreated", target = "dateCreated"),
                     @Mapping(source = "user", target = "user"),
             }
     )
