@@ -9,6 +9,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring", uses = {UsuarioMapper.class})
 public interface OrderMapper {
+    //Mappings nos servira para mapear los atributos de la entidad a los atributos del dominio
     @Mappings(
             {
                     @Mapping(source = "id", target = "id"),
