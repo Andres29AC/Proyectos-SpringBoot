@@ -7,6 +7,9 @@ import com.abimportapp.tienda.application.repository.StockRepository;
 import com.abimportapp.tienda.application.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
 public class BeanConfiguration {
@@ -34,5 +37,10 @@ public class BeanConfiguration {
     @Bean
     public OrderProductService orderProductService(OrderProductRepository orderProductRepository){
         return new OrderProductService(orderProductRepository);
+    }
+    @Bean
+    @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public CartService cartService(){
+        return new CartService();
     }
 }
