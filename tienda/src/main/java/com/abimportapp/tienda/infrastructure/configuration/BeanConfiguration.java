@@ -1,9 +1,6 @@
 package com.abimportapp.tienda.infrastructure.configuration;
 
-import com.abimportapp.tienda.application.repository.OrderProductRepository;
-import com.abimportapp.tienda.application.repository.OrderRepository;
-import com.abimportapp.tienda.application.repository.ProductRepository;
-import com.abimportapp.tienda.application.repository.StockRepository;
+import com.abimportapp.tienda.application.repository.*;
 import com.abimportapp.tienda.application.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,5 +39,9 @@ public class BeanConfiguration {
     @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public CartService cartService(){
         return new CartService();
+    }
+    @Bean
+    public UserService userService(UserRepository userRepository){
+        return new UserService(userRepository);
     }
 }

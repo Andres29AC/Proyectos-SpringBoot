@@ -4,10 +4,7 @@ import com.abimportapp.tienda.application.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -39,5 +36,10 @@ public class CartController {
         model.addAttribute("cart",cartService.getListItems());
         model.addAttribute("total",cartService.getTotalCart());
         return "user/cart/cart";
+    }
+    @GetMapping("/delete-item-cart/{id}")
+    public String deleteItemCart(@PathVariable Integer id){
+        cartService.removeItemCart(id);
+        return "redirect:/user/cart/get-cart";
     }
 }
