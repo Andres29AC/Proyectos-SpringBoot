@@ -44,4 +44,8 @@ public class BeanConfiguration {
     public UserService userService(UserRepository userRepository){
         return new UserService(userRepository);
     }
+    @Bean
+    public RegistrationService registrationService(UserService userService){
+        return new RegistrationService(userService);
+    }
 }
