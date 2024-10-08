@@ -48,4 +48,8 @@ public class BeanConfiguration {
     public RegistrationService registrationService(UserService userService){
         return new RegistrationService(userService);
     }
+    @Bean
+    public LoginService loginService(UserService userService){
+        return new LoginService(userService);
+    }
 }
