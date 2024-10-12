@@ -11,9 +11,9 @@ public class LoginService {
         this.userService = userService;
     }
     //TODO: returns true if the user exists, otherwise false
-    public boolean existsUser(UserDto userDto) {
+    public boolean existsUser(String email) {
         try {
-            Usuario usuario = userService.findByEmail(userDto.getEmail());
+            Usuario usuario = userService.findByEmail(email);
         } catch (Exception e) {
             return false;
         }
@@ -27,8 +27,8 @@ public class LoginService {
             return 0;
         }
     }
-    public UserType getUserType(UserDto userDto) {
-        return userService.findByEmail(userDto.getEmail()).getUserType();
+    public UserType getUserType(String email) {
+        return userService.findByEmail(email).getUserType();
     }
     //TODO: obtains the user by email
     public Usuario getUser(String email) {
@@ -38,4 +38,12 @@ public class LoginService {
             return new Usuario();
         }
     }
+    public Usuario getIdUser(Integer id) {
+        try {
+            return userService.findById(id);
+        } catch (Exception e) {
+            return new Usuario();
+        }
+    }
+
 }
