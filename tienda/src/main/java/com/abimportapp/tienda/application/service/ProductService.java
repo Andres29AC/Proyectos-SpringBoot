@@ -3,6 +3,7 @@ package com.abimportapp.tienda.application.service;
 import com.abimportapp.tienda.application.repository.ProductRepository;
 import com.abimportapp.tienda.domain.Product;
 import com.abimportapp.tienda.domain.Usuario;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,10 +31,10 @@ public class ProductService {
         return  productRepository.getProductById(id);
     }
 
-    public Product saveProduct(Product product, MultipartFile multipartFile) throws IOException {
+    public Product saveProduct(Product product, MultipartFile multipartFile,HttpSession session) throws IOException {
         if(product.getId()==null){
             Usuario user = new Usuario();
-            user.setId(1);
+            user.setId(Integer.parseInt(session.getAttribute("userId").toString()));
             product.setDateCreated(LocalDateTime.now());
             product.setDateUpdated(LocalDateTime.now());
             product.setUser(user);

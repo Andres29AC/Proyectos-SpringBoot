@@ -3,6 +3,7 @@ package com.abimportapp.tienda.infrastructure.controller;
 import com.abimportapp.tienda.application.service.ProductService;
 import com.abimportapp.tienda.domain.Product;
 import com.abimportapp.tienda.domain.Usuario;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,16 +27,17 @@ public class ProductController {
         return "admin/products/create";
     }
     @PostMapping("/save-product")
-    public String saveProduct(Product product, @RequestParam("img") MultipartFile multipartFile) throws IOException {
+    public String saveProduct(Product product, @RequestParam("img") MultipartFile multipartFile,HttpSession session) throws IOException {
         log.info("Product: {}" , product);
-        productService.saveProduct(product,multipartFile);
+        productService.saveProduct(product,multipartFile,session);
         //return "admin/products/create";
         return "redirect:/admin";
     }
     @GetMapping("/show")
-    public String showProduct(Model model){
+    public String showProduct(Model model,HttpSession session){
+        log.info("userId desde la variable de sesion: {}", session.getAttribute("userId").toString());
         Usuario usuario = new Usuario();
-        usuario.setId(1);
+        usuario.setId(Integer.parseInt(session.getAttribute("userId").toString()));
         Iterable<Product> products = productService.getProductsByUser(usuario);
         model.addAttribute("products", products);
         return "admin/products/show";

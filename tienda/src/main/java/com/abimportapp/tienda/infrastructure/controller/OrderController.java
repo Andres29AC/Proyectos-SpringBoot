@@ -2,11 +2,13 @@ package com.abimportapp.tienda.infrastructure.controller;
 
 import com.abimportapp.tienda.application.service.*;
 import com.abimportapp.tienda.domain.*;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class OrderController {
     private final OrderProductService orderProductService;
     private final StockService stockService;
     private final ValidateStock validateStock;
+    private final Integer UNIT_IN = 0;
 
     public OrderController(CartService cartService, UserService userService, ProductService productService, OrderService orderService, OrderProductService orderProductService, StockService stockService, ValidateStock validateStock) {
         this.cartService = cartService;
@@ -35,17 +38,20 @@ public class OrderController {
     }
 
     @GetMapping("/sumary-order")
-    public String showSumaryOrder(Model model) {
-        Usuario user = userService.findById(1);
+    public String showSumaryOrder(Model model ,HttpSession session) {
+        log.info("userId desde la variable de sesion: {}", session.getAttribute("userId").toString());
+        Usuario user = userService.findById(Integer.parseInt(session.getAttribute("userId").toString()));
         model.addAttribute("cart", cartService.getListItems());
         model.addAttribute("total", cartService.getTotalCart());
         model.addAttribute("user", user);
+        model.addAttribute("id",session.getAttribute("userId").toString());
         return "user/sumaryorder";
     }
     @GetMapping("/create-order")
-    public String createOrder() {
+    public String createOrder(RedirectAttributes attributes, HttpSession session) {
         log.info("Creating order...");
-        Usuario user = userService.findById(1);//id temporal aun no hay sesiones
+        log.info("userId desde la variable de sesion: {}", session.getAttribute("userId").toString());
+        Usuario user = userService.findById(Integer.parseInt(session.getAttribute("userId").toString()));
         Order order = new Order();
         order.setDateCreated(LocalDateTime.now());
         order.setUser(user);
@@ -62,12 +68,13 @@ public class OrderController {
                     stock.setDateCreated(LocalDateTime.now());
                     stock.setProduct(op.getProduct());
                     stock.setDescription("venta");
-                    stock.setUnitIn(0);
+                    stock.setUnitIn(UNIT_IN);
                     stock.setUnitOut(op.getQuantity());
                     stockService.saveStock(validateStock.calcularBalance(stock));
                 }
         );
         cartService.removeAllItemsCart();
+        attributes.addFlashAttribute("id",session.getAttribute("userId").toString());
         return "redirect:/home";
     }
 }

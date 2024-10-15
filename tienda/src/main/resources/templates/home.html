@@ -20,7 +20,8 @@
 </head>
 
 <body>
-    <div th:insert = "~{user/template_user.html::header}"></div>
+   <div th:insert="~{user/template_user.html::header}" th:if="${id==null}"></div>
+   <div th:insert="~{user/template_user.html::userlogged}" th:unless="${id==null}"></div>
 
     <!-- Page Content -->
     <div class="container">

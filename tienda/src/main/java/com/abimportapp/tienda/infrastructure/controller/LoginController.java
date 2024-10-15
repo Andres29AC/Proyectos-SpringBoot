@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/login")
@@ -25,8 +26,9 @@ public class LoginController {
         return "login";
     }
     @GetMapping("/access")
-    public String access(HttpSession session) {
+    public String access(RedirectAttributes attributes,HttpSession session) {
         Usuario user =loginService.getIdUser(Integer.parseInt(session.getAttribute("userId").toString()));
+        attributes.addFlashAttribute("id", session.getAttribute("userId").toString());
         if (loginService.existsUser(user.getEmail())) {
             if (loginService.getUserType(user.getEmail()).name().equals("ADMIN")) {
                 return "redirect:/admin";

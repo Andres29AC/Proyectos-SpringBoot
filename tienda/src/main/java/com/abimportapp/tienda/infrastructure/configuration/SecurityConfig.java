@@ -31,7 +31,8 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER").anyRequest().permitAll())
-                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/login/access"));
+                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/login/access"))
+                .logout(logout -> logout.logoutSuccessUrl("/close"));
         return httpSecurity.build();
     }
     @Bean
